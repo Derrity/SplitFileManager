@@ -72,7 +72,7 @@ void FileManager::deleteChunks() {
             std::string filename = entry.path().filename().string();
             if (std::regex_match(filename, chunkPattern)) {
                 std::filesystem::remove(entry.path());
-                std::cout << "Deleted chunk file: " << filename << std::endl;
+                //std::cout << "Deleted chunk file: " << filename << std::endl;
             }
         }
     }
