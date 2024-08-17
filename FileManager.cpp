@@ -1,16 +1,20 @@
 #include "FileManager.h"
 
-std::size_t FileManager::getNumberOfChunks() {
-    std::size_t numberOfChunks = 0;
-    for (const auto &entry: std::filesystem::directory_iterator(std::filesystem::current_path())) {
-        if (entry.is_regular_file()) {
-            std::string filename = entry.path().filename().string();
-            if (filename.find(this->filePath + ".part") == 0) {
-                numberOfChunks++;
-            }
-        }
+std::size_t FileManager::GetFileSize() {
+    std::ifstream file(this->filePath, std::ios::binary | std::ios::ate);
+    if (!file.is_open()) {
+        std::cerr << "Can't open file: " << this->filePath << std::endl;
+        return 0;
     }
-    return numberOfChunks;
+    std::size_t size = file.tellg();
+    file.close();
+    return size;
+}
+
+std::size_t FileManager::getNumberOfChunks() {
+    std::size_t fileSize = GetFileSize();
+    std::size_t NumberOfChunks = (fileSize + this->chunkSize - 1) / this->chunkSize;
+    return  NumberOfChunks;
 }
 
 FileManager::FileManager(const std::string& _filePath,const std::size_t &_chunkSize):filePath(_filePath),chunkSize(_chunkSize) {}

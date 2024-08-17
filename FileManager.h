@@ -10,7 +10,7 @@ class FileManager {
 private:
     std::string filePath;
     std::size_t chunkSize;
-
+    std::size_t FileManager::GetFileSize();
 public:
     FileManager(const std::string& _filePath,const std::size_t &_chunkSize);
 
