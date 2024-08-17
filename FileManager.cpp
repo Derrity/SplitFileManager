@@ -26,6 +26,7 @@ void FileManager::splitFile() {
     if (fileSize <= this->chunkSize) {
         std::cout << "File size is less than or equal to chunk size, no splitting needed." << std::endl;
         inputFile.close();
+        std::filesystem::copy(this->filePath, this->filePath + ".part0");
         return;
     }
     std::size_t numChunks = fileSize / this->chunkSize;
